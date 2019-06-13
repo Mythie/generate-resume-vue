@@ -26,7 +26,7 @@
     </b-modal>
     <FormSwitch
       v-model="enabled"
-      label="Enable education sectopm?"
+      label="Enable education section?"
       class="mb-2"
     />
     <div v-if="enabled">
