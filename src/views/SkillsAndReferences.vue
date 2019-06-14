@@ -135,7 +135,7 @@
       >
         <b-button
           variant="outline"
-          to="/colors"
+          to="/education"
           size="lg"
         >
           Back
