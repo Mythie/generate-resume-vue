@@ -54,27 +54,14 @@ export default {
     FormExperience,
   },
   computed: {
-
-    formatted() {
-      return {
-        enabled: this.enabled,
-        company: this.company,
-        title: this.title,
-        duration: this.duration,
-        paragraph: this.paragraph,
-        achievementList: this.achievementList,
-      };
+    enabled() {
+      return this.$store.state.config.currentRole.enabled;
     },
-  },
-  watch: {
-    formatted() {
-      this.$emit('input', this.formatted);
-    },
-  },
-  mounted() {
-    this.$emit('input', this.formatted);
   },
   methods: {
+    updateCurrentRoleEnabled(value) {
+      this.$store.commit('updateCurrentRoleEnabled', value);
+    },
     updateCurrentRole(payload) {
       this.$store.commit('updateCurrentRole', payload);
     },
