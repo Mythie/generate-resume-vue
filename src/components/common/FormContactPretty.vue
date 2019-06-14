@@ -1,16 +1,20 @@
 <template>
   <div class="form-contact-pretty">
     <FormSwitch
-      v-model="enabled"
+      :value="value.enabled"
       :label="`Show ${contact}?`"
+      @input="updateEnabled"
     />
 
-    <b-row v-if="enabled">
+    <b-row v-if="value.enabled">
       <b-col md="6">
         <b-form-group
-          label="Pretty"
+          label="Display"
         >
-          <b-form-input v-model="pretty" />
+          <b-form-input
+            :value="value.pretty"
+            @input="updatePretty"
+          />
           <template
             slot="description"
           >
@@ -24,7 +28,10 @@
         <b-form-group
           label="Value"
         >
-          <b-form-input v-model="value" />
+          <b-form-input
+            :value="value.value"
+            @input="updateValue"
+          />
           <template
             slot="description"
           >
@@ -50,30 +57,33 @@ export default {
       type: String,
       required: true,
     },
-  },
-  data() {
-    return {
-      enabled: false,
-      value: '',
-      pretty: '',
-    };
-  },
-  computed: {
-    formatted() {
-      return {
-        enabled: this.enabled,
-        value: this.value,
-        pretty: this.pretty,
-      };
+    value: {
+      type: Object,
+      required: true,
     },
   },
-  watch: {
-    formatted() {
-      this.$emit('input', this.formatted);
+  methods: {
+    updatePretty(p) {
+      this.$emit('input', {
+        enabled: this.value.enabled,
+        pretty: p,
+        value: this.value.value,
+      });
     },
-  },
-  mounted() {
-    this.$emit('input', this.formatted);
+    updateValue(v) {
+      this.$emit('input', {
+        enabled: this.value.enabled,
+        pretty: this.value.pretty,
+        value: v,
+      });
+    },
+    updateEnabled(e) {
+      this.$emit('input', {
+        enabled: e,
+        pretty: this.value.pretty,
+        value: this.value.value,
+      });
+    },
   },
 };
 </script>

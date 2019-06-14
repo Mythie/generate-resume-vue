@@ -1,15 +1,19 @@
 <template>
   <div class="form-contact-raw">
     <FormSwitch
-      v-model="enabled"
+      :value="value.enabled"
       :label="`Show ${contact}?`"
+      @input="updateEnabled"
     />
 
     <b-form-group
-      v-if="enabled"
-      label="Value"
+      v-if="value.enabled"
+      :label="contact"
     >
-      <b-form-input v-model="value" />
+      <b-form-input
+        :value="value.value"
+        @input="updateValue"
+      />
       <template
         slot="description"
       >
@@ -33,28 +37,24 @@ export default {
       type: String,
       required: true,
     },
-  },
-  data() {
-    return {
-      enabled: false,
-      value: '',
-    };
-  },
-  computed: {
-    formatted() {
-      return {
-        enabled: this.enabled,
-        value: this.value,
-      };
+    value: {
+      type: Object,
+      required: true,
     },
   },
-  watch: {
-    formatted() {
-      this.$emit('input', this.formatted);
+  methods: {
+    updateValue(v) {
+      this.$emit('input', {
+        enabled: this.value.enabled,
+        value: v,
+      });
     },
-  },
-  mounted() {
-    this.$emit('input', this.formatted);
+    updateEnabled(e) {
+      this.$emit('input', {
+        enabled: e,
+        value: this.value.value,
+      });
+    },
   },
 };
 </script>

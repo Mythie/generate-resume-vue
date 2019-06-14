@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test": "echo \"Info: no tests specified\" && exit 0",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "test": "echo \"Info: no tests specified\" && exit 0",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/vue-fontawesome": "^0.1.6",
     "animate.css": "^3.7.2",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
@@ -16,7 +19,9 @@
     "core-js": "^2.6.5",
     "tinycolor2": "^1.4.1",
     "vue": "^2.6.10",
-    "vue-color": "^2.7.0"
+    "vue-color": "^2.7.0",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

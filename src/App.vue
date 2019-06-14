@@ -1,45 +1,29 @@
 <template>
   <div id="app">
+    <!-- <div id="nav">
+      <router-link to="/">
+        Home
+      </router-link> |
+      <router-link to="/about">
+        About
+      </router-link>
+    </div> -->
     <transition
-      enter-active-class="animated fast fadeIn"
-      leave-active-class="animated faster fadeOut"
       name="custom-classes-transition"
+      enter-active-class="animated fast fadeIn"
+      leave-active-class="animated fast fadeOut"
       mode="out-in"
     >
-      <!-- Keys are just for the transition group -->
-      <GeneratorHero
-        v-if="!start"
-        @action:start="start = !start"
-      />
-      <b-container v-else>
-        <GeneratorForms />
-      </b-container>
+      <router-view />
     </transition>
   </div>
 </template>
-
-<script>
-import GeneratorHero from './components/GeneratorHero.vue';
-import GeneratorForms from './components/GeneratorForms.vue';
-
-export default {
-  name: 'App',
-  components: {
-    GeneratorHero,
-    GeneratorForms,
-  },
-  data() {
-    return {
-      start: false,
-    };
-  },
-};
-</script>
 
 <style lang="scss">
 @import '~bootstrap/dist/css/bootstrap.css';
 @import '~bootstrap-vue/dist/bootstrap-vue.css';
 @import '~animate.css/animate.min.css';
+@import '@/assets/variables.scss';
 
 
 #app {
@@ -50,11 +34,11 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #ffffff;
-  background: #3498db;
+  background: $backgroundColor;
   min-height: 100vh;
   padding: 20px 10px;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 1000px) {
     align-items: center;
   }
 }

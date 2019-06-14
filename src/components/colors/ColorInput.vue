@@ -84,6 +84,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/variables.scss';
+
   .color-input {
     padding-bottom: 10px;
   }
@@ -97,6 +99,7 @@ export default {
   }
 
   .color-picker-form {
+    border: 1px solid darken($backgroundColor, 5%);
     position: relative;
     background: #ffffff;
     padding: 10px;
@@ -105,7 +108,8 @@ export default {
 
     .color-picker-input{
       padding: 20px;
-      height: 100px;
+      height: 80px;
+      // width: 150px;
       border-radius: 7px;
       display: flex;
       align-items: center;
@@ -115,7 +119,7 @@ export default {
     .color-picker-selector {
       display: block;
       position: absolute;
-      top: 120px;
+      top: 105px;
       width: 100%;
       z-index: 999;
     }
