@@ -28,6 +28,9 @@ export default new Vuex.Store({
     updateApplicantContact(state, payload) {
       state.config.applicant[payload.prop] = payload.data;
     },
+    updateCurrentRole(state, payload) {
+      state.config.currentRole = payload;
+    },
     updateExperienceEnabled(state, status) {
       state.config.experience.enabled = status;
     },

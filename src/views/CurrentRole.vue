@@ -9,7 +9,7 @@
       label="Display current role?"
     />
     <div v-if="enabled">
-      <FormExperience @input="handleUpdate" />
+      <FormExperience @input="updateCurrentRole" />
     </div>
 
     <b-row>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import FormSwitch from '@/components/common/FormSwitch.vue';
 import FormExperience from '@/components/common/FormExperience.vue';
 
@@ -50,16 +52,6 @@ export default {
   components: {
     FormSwitch,
     FormExperience,
-  },
-  data() {
-    return {
-      enabled: true,
-      company: '',
-      title: '',
-      duration: '',
-      paragraph: '',
-      achievementList: [],
-    };
   },
   computed: {
 
@@ -83,12 +75,8 @@ export default {
     this.$emit('input', this.formatted);
   },
   methods: {
-    handleUpdate(payload) {
-      this.company = payload.company;
-      this.title = payload.title;
-      this.duration = payload.duration;
-      this.paragraph = payload.paragraph;
-      this.achievementList = payload.achievementList;
+    updateCurrentRole(payload) {
+      this.$store.commit('updateCurrentRole', payload);
     },
   },
 };
