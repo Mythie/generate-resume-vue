@@ -35,10 +35,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/variables.scss';
+
 .generator-hero {
   align-self: center;
   text-align: center;
-  color: #ffffff;
+  color: $textColor;
 
   h1 {
     @media screen and (max-width: 600px) {

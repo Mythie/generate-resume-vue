@@ -33,6 +33,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/variables.scss";
+
 .form-switch {
   display: flex;
   padding: 7px 0;
@@ -44,6 +46,7 @@ export default {
   width: 100px;
   border-radius: 7px;
   cursor: pointer;
+  border: 1px solid darken($backgroundColor, 5%);
 }
 
 .switch {

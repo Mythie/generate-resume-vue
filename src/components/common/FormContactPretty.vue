@@ -35,7 +35,7 @@
           <template
             slot="description"
           >
-            <span class="text-white">
+            <span class="text">
               The raw value which will be linked to
             </span>
           </template>

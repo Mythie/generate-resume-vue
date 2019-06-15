@@ -17,7 +17,7 @@
       <template
         slot="description"
       >
-        <span class="text-white">
+        <span class="text">
           The value which will be displayed on the resume
         </span>
       </template>

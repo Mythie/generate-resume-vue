@@ -33,7 +33,7 @@
   font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #ffffff;
+  color: $textColor;
   background: $backgroundColor;
   min-height: 100vh;
   padding: 20px 10px;
@@ -55,13 +55,17 @@ h2 {
 hr {
   height: 2px;
   max-width: 300px;
-  background: #ffffff;
+  background: $textColor;
+}
+
+.text {
+  color: $textColor;
 }
 
 .btn-outline {
   background: transparent;
   border: 2px solid #ffffff;
-  color: #ffffff;
+  color: $textColor;
   transition: 300ms;
 
   &:hover {
