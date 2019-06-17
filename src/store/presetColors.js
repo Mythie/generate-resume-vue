@@ -1,5 +1,13 @@
 export default [
   {
+    name: 'Purple',
+    textColor: 'rgba(51, 51, 51, 1)',
+    sideBarColor: 'rgba(91, 70, 163, 1)',
+    sideBarTextColor: 'rgba(230, 227, 241, 1)',
+    stripeColor: 'rgba(71, 55, 127, 1)',
+    horizontalRuleColor: 'rgba(91, 70, 163, 1)',
+  },
+  {
     name: 'VueJS',
     textColor: 'rgba(44, 62, 80, 1)',
     sideBarColor: 'rgba(65, 184, 131, 1)',
@@ -22,13 +30,5 @@ export default [
     sideBarTextColor: 'rgba(253, 234, 235, 1)',
     stripeColor: 'rgba(51, 51, 51, 1)',
     horizontalRuleColor: 'rgba(181, 46, 49, 1)',
-  },
-  {
-    name: 'Purple',
-    textColor: 'rgba(51, 51, 51, 1)',
-    sideBarColor: 'rgba(91, 70, 163, 1)',
-    sideBarTextColor: 'rgba(230, 227, 241, 1)',
-    stripeColor: 'rgba(71, 55, 127, 1)',
-    horizontalRuleColor: 'rgba(91, 70, 163, 1)',
   },
 ];

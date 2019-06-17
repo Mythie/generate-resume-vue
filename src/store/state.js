@@ -1,10 +1,10 @@
 export default {
   colors: {
-    sideBarColor: 'rgba(65, 184, 131, 1)',
-    sideBarTextColor: 'rgba(232, 246, 240, 1)',
-    stripeColor: 'rgba(52, 73, 94, 1)',
-    horizontalRuleColor: 'rgba(52, 73, 94, 1)',
-    textColor: 'rgba(44, 62, 80, 1)',
+    textColor: 'rgba(51, 51, 51, 1)',
+    sideBarColor: 'rgba(91, 70, 163, 1)',
+    sideBarTextColor: 'rgba(230, 227, 241, 1)',
+    stripeColor: 'rgba(71, 55, 127, 1)',
+    horizontalRuleColor: 'rgba(91, 70, 163, 1)',
   },
   config: {
     resume: {
