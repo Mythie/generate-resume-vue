@@ -1,0 +1,55 @@
+.container {
+  max-width: 1122px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.row, row {
+  margin: 0 -15px;
+  display: flex;
+  flex-wrap: wrap;
+
+  &::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+
+  @for $i from 1 to 12 {
+    .col-xs-#{$i}, col.xs-#{$i} {
+      position: relative;
+      width: ($i / 12) * 100%;
+      padding: 0 15px;
+    }
+
+    .col-sm-#{$i}, col.sm-#{$i} {
+      position: relative;
+      width: 100%;
+      padding: 0 15px;
+      
+      @media screen and (min-width: 600px) {
+        width: ($i / 12) * 100%;
+      }
+    }
+    
+    .col-md-#{$i}, col.md-#{$i} {
+      position: relative;
+      width: 100%;
+      padding: 0 15px;
+      
+      @media screen and (min-width: 1024px) {
+        width: ($i / 12) * 100%;
+      }
+    }
+
+    .col-lg-#{$i}, col.lg-#{$i} {
+      position: relative;
+      width: 100%;
+      padding: 0 15px;
+      
+      @media screen and (min-width: 1122px) {
+        width: ($i / 12) * 100%;
+      }
+    }
+  }
+}

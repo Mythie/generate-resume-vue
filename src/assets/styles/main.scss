@@ -1,0 +1,36 @@
+@import "@/assets/styles/variables.scss";
+@import "@/assets/styles/components/typography.scss";
+@import "@/assets/styles/components/grid.scss";
+@import "@/assets/styles/components/flex.scss";
+@import "@/assets/styles/components/buttons.scss";
+@import "@/assets/styles/components/forms.scss";
+@import "@/assets/styles/components/lists.scss";
+@import "@/assets/styles/components/utils.scss";
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+html, body {
+  font-size: 16px;
+}
+
+#app {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $primaryColor;
+  background: $backgroundColor;
+  min-height: 100vh;
+  padding: 20px 20px;
+
+  @media screen and (min-width: 1000px) {
+    align-items: center;
+  }
+}
+
+// .text {
+//   color: $primaryColor;
+// }

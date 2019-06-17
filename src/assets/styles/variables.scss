@@ -1,0 +1,13 @@
+$backgroundColor: darken(#ffffff, 2%);
+
+$primaryColor: #5B46A3;
+
+$primaryColorWhite: mix($primaryColor, #ffffff, 15%);
+
+$primaryColorLighten: lighten(#5B46A3, 5%);
+$primaryColorLighten2: lighten(#5B46A3, 10%);
+
+$primaryColorDarken: darken(#5B46A3, 5%); 
+$primaryColorDarken2: darken(#5B46A3, 10%); 
+
+$primaryDisabled: lighten($primaryColor, 20%);

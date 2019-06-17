@@ -1,117 +1,123 @@
 <template>
   <div class="applicant container">
-    <h2>Fill in your Contact Details</h2>
+    <h2 class="title">
+      Fill in your Contact Details
+    </h2>
     <hr>
-    <!-- Name -->
-    <b-form-group
-      label="Name"
-    >
-      <b-form-input
-        :value="name"
-        @input="updateName"
-      />
-    </b-form-group>
-    <!-- Tagline -->
-    <b-form-group
-      label="Tagline"
-    >
-      <b-form-textarea
-        rows="3"
-        placeholder="Try to keep it short but interesting!"
-        :value="tagline"
-        @input="updateTagline"
-      />
-    </b-form-group>
+
     <div class="mb-3">
-      <FormContactPretty
-        contact="Mobile"
-        :value="mobile"
-        @input="updateMobile"
-      />
-      <FormContactRaw
-        contact="Email"
-        :value="email"
-        @input="updateEmail"
-      />
-      <FormContactPretty
-        contact="LinkedIn"
-        :value="linkedin"
-        @input="updateLinkedIn"
-      />
-      <FormContactPretty
-        contact="Github"
-        :value="github"
-        @input="updateGithub"
-      />
-      <FormContactPretty
-        contact="Facebook"
-        :value="facebook"
-        @input="updateFacebook"
-      />
-      <!-- <FormContactPretty
-        contact="Website"
-        :value="website"
-        @input="updateWebsite"
-      /> -->
-      <FormContactRaw
-        contact="Location"
-        :value="location"
-        @input="updateLocation"
-      />
+      <!-- We won't bother extracting these two to components since they're so small -->
+      <div class="form-group">
+        <label
+          for="name"
+          class="form-label"
+        >
+          Name:
+        </label>
+        <input
+          id="name"
+          v-model="name"
+          class="form-text"
+          type="text"
+        >
+      </div>
+      <div class="form-group">
+        <label
+          for="name"
+          class="form-label"
+        >
+          Tagline:
+        </label>
+        <textarea
+          id="name"
+          v-model="tagline"
+          rows="5"
+          class="form-textarea"
+          type="text"
+        />
+        <div class="form-description small">
+          Try to keep it short, but interesting!
+        </div>
+      </div>
+      <!-- Contact Components -->
+      <MobileContact />
+      <EmailContact />
+      <GithubContact />
+      <LinkedinContact />
+      <FacebookContact />
+      <WebsiteContact />
+      <LocationContact />
     </div>
-    <b-row>
-      <b-col
-        xs="6"
-        class="d-flex flex-row"
+    <div class="row">
+      <div
+        class="col-xs-6 d-flex flex-items-center flex-row"
       >
-        <b-button
-          variant="outline"
+        <router-link
           to="/colors"
-          size="lg"
         >
           Back
-        </b-button>
-      </b-col>
-      <b-col
-        xs="6"
-        class="d-flex flex-row-reverse"
+        </router-link>
+      </div>
+      <div
+        class="col-xs-6 d-flex flex-items-center flex-row-reverse"
       >
-        <b-button
-          variant="outline"
+        <router-link
+          class="btn btn-lg btn-outline"
           to="/current-role"
-          size="lg"
         >
           Current Role&nbsp;
           <fa-icon icon="arrow-right" />
-        </b-button>
-      </b-col>
-    </b-row>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import FormContactPretty from '@/components/common/FormContactPretty.vue';
-import FormContactRaw from '@/components/common/FormContactRaw.vue';
+
+import MobileContact from '@/components/applicant/MobileContact.vue';
+import EmailContact from '@/components/applicant/EmailContact.vue';
+import GithubContact from '@/components/applicant/GithubContact.vue';
+import LinkedinContact from '@/components/applicant/LinkedinContact.vue';
+import FacebookContact from '@/components/applicant/FacebookContact.vue';
+import WebsiteContact from '@/components/applicant/WebsiteContact.vue';
+import LocationContact from '@/components/applicant/LocationContact.vue';
 
 export default {
   name: 'Applicant',
   components: {
-    FormContactPretty,
-    FormContactRaw,
+    MobileContact,
+    EmailContact,
+    GithubContact,
+    LinkedinContact,
+    FacebookContact,
+    WebsiteContact,
+    LocationContact,
   },
   computed: {
-    ...mapState({
-      name: state => state.config.applicant.name,
-      tagline: state => state.config.applicant.tagline,
-      mobile: state => state.config.applicant.mobile,
-      email: state => state.config.applicant.email,
-      linkedin: state => state.config.applicant.linkedin,
-      github: state => state.config.applicant.github,
-      facebook: state => state.config.applicant.facebook,
-      website: state => state.config.applicant.website,
-      location: state => state.config.applicant.location,
-    }),
+    name: {
+      get() {
+        return this.$store.state.config.applicant.name;
+      },
+      set(value) {
+        this.$store.commit('updateApplicant', {
+          prop: 'name',
+          value,
+        });
+      },
+    },
+    tagline: {
+      get() {
+        return this.$store.state.config.applicant.tagline;
+      },
+      set(value) {
+        this.$store.commit('updateApplicant', {
+          prop: 'tagline',
+          value,
+        });
+      },
+    },
   },
   methods: {
     updateName(value) {

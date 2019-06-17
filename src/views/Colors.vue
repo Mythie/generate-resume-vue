@@ -1,9 +1,11 @@
 <template>
   <div class="color-forms container">
-    <h2>Select your Colors</h2>
+    <h2 class="title">
+      Select your Colors
+    </h2>
     <hr>
-    <b-row>
-      <b-col md="4">
+    <div class="row">
+      <div class="col-md-4">
         <ColorInput
           :value="textColor"
           class="color-input mb-2"
@@ -34,11 +36,8 @@
           label="Horizontal Rule Color"
           @input="updateHorizontalRuleColor"
         />
-      </b-col>
-      <b-col
-        md="8"
-        class="resume-container"
-      >
+      </div>
+      <div class="col-md-8 resume-container">
         <ResumePreview
           class="resume-preview"
           :text-color="textColor"
@@ -47,18 +46,19 @@
           :stripe-color="stripeColor"
           :horizontal-rule-color="horizontalRuleColor"
         />
-      </b-col>
-    </b-row>
-    <div class="clearfix">
-      <b-button
-        variant="outline"
-        size="lg"
-        class="float-right"
-        to="/applicant"
-      >
-        Applicant&nbsp;
-        <fa-icon icon="arrow-right" />
-      </b-button>
+      </div>
+    </div>
+    <div class="row reverse">
+      <div class="col-md-6" />
+      <div class="col-md-6 d-flex flex-row-reverse">
+        <router-link
+          to="/applicant"
+          class="btn btn-lg btn-outline"
+        >
+          Applicant&nbsp;
+          <fa-icon icon="arrow-right" />
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -118,8 +118,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/variables.scss';
-
+@import '@/assets/styles/variables.scss';
   .resume-container {
     padding: 20px;
     display: flex;

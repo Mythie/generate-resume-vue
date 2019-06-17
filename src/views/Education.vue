@@ -1,245 +1,171 @@
 <template>
   <div class="education container">
-    <h2>Your Education</h2>
+    <h2 class="title">
+      Your Education
+    </h2>
     <hr>
 
-    <b-modal
-      v-if="list.length > 0"
-      ref="education-modal"
-      title="Education"
-      ok-only
-    >
-      <h4>{{ modalItem.provider }}</h4>
-      <p>
-        <strong>Course:</strong> {{ modalItem.course }} <br>
-        <strong>Duration:</strong> {{ modalItem.duration }} <br>
-        <strong>Paragraph:</strong> {{ modalItem.paragraph }} <br>
-        <strong>Achievements:</strong>
-        <ul>
-          <li
-            v-for="(achievement, index) in modalItem.achievementList"
-            :key="index"
-          >
-            {{ achievement }}
-          </li>
-        </ul>
-      </p>
-    </b-modal>
+    <AddEducationModal v-model="showAddModal" />
+    <ViewEducationModal
+      v-model="showViewModal"
+      :item="viewEducationItem"
+      :index="viewModalKey"
+    />
 
     <FormSwitch
-      label="Display education?"
+      v-model="enabled"
+      label="Display Education?"
       class="mb-3"
-      :value="enabled"
-      @input="updateEnabled"
+      @input="handle"
     />
 
     <div
       v-if="enabled"
-      class="mb-3"
+      class="row"
     >
-      <h4 class="mb-3">
-        Current Education Items
-      </h4>
-
-      <b-row v-if="list.length > 0">
-        <b-col
-          v-for="(item, index) in list"
-          :key="index"
-          md="3"
-          sm="4"
-          class="mb-3"
-        >
-          <div
-            class="education-item-list"
-            @click="showModal(index)"
-          >
-            <h5>
-              {{ item.provider }}
-              <small class="d-block">{{ item.course }}</small>
-            </h5>
-            <span>{{ item.duration }}</span>
-          </div>
-        </b-col>
-      </b-row>
       <div
-        v-else
-        class="mb-3"
+        v-for="(item, index) in list"
+        :key="index"
+        class="col-md-3 test mb-3"
       >
-        No education items yet, try adding one..
+        <div
+          class="education-item"
+          @click="svm(index)"
+        >
+          <h4 class="w-100">
+            {{ item.provider }}
+          </h4>
+          <span>{{ item.course }}</span>
+        </div>
       </div>
-
-      <!-- Company -->
-      <b-form-group
-        label="Provider"
-      >
-        <b-form-input
-          v-model="provider"
-          placeholder="e.g. RMIT"
-        />
-      </b-form-group>
-      <!-- Title -->
-      <b-form-group
-        label="Course"
-      >
-        <b-form-input
-          v-model="course"
-          placeholder="e.g. Bachelors in Information Technology"
-        />
-      </b-form-group>
-      <!-- Duration -->
-      <b-form-group
-        label="Duration"
-      >
-        <b-form-input
-          v-model="duration"
-          placeholder="e.g. Current"
-        />
-      </b-form-group>
-      <!-- Paragraph -->
-      <b-form-group
-        label="Paragraph"
-      >
-        <b-form-textarea
-          v-model="paragraph"
-          placeholder="Add a paragraph about your education, if left empty it will be hidden in the final resume"
-          rows="3"
-        />
-      </b-form-group>
-
-      <!-- Achievement List -->
-      <FormList
-        v-model="achievementList"
-        label="Achievement List"
-        button-text="Add Achievement"
-        placeholder="e.g. Graduated with a 4.0 GPA"
-        description="Add a list of achievements whilst in the course, if left empty it will be hidden in the final resume."
-      />
-
-
-      <b-button
-        variant="outline"
-        size="lg"
-        class="mb-3"
-        @click="addEducationItem"
-      >
-        Add education item&nbsp;
-        <fa-icon
-          icon="plus"
-          size="sm"
-        />
-      </b-button>
+      <div class="col-md-3 test mb-3">
+        <div
+          class="add-education-item"
+          @click="showAddModal = true"
+        >
+          <fa-icon
+            class="d-block"
+            icon="plus"
+            size="2x"
+          />
+        </div>
+      </div>
     </div>
 
-    <b-row>
-      <b-col
-        xs="6"
-        class="d-flex flex-row"
+    <!-- Navigation -->
+    <div class="row">
+      <div
+        class="col-xs-6 d-flex flex-items-center flex-row"
       >
-        <b-button
-          variant="outline"
-          to="/experience"
-          size="lg"
-        >
+        <router-link to="/experience">
           Back
-        </b-button>
-      </b-col>
-      <b-col
-        xs="6"
-        class="d-flex flex-row-reverse"
+        </router-link>
+      </div>
+      <div
+        class="col-xs-6 d-flex flex-items-center flex-row-reverse"
       >
-        <b-button
-          variant="outline"
+        <router-link
           to="/skills-and-references"
-          size="lg"
+          class="btn btn-outline btn-lg"
         >
           Skills & References&nbsp;
           <fa-icon icon="arrow-right" />
-        </b-button>
-      </b-col>
-    </b-row>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
 import FormSwitch from '@/components/common/FormSwitch.vue';
-import FormList from '@/components/common/FormList.vue';
+import AddEducationModal from '@/components/education/AddEducationModal.vue';
+import ViewEducationModal from '@/components/education/ViewEducationModal.vue';
 
 export default {
   components: {
     FormSwitch,
-    FormList,
+    AddEducationModal,
+    ViewEducationModal,
   },
   data() {
     return {
-      modalKey: 0,
-      provider: '',
-      course: '',
-      duration: '',
-      paragraph: '',
-      achievementList: [],
+      showAddModal: false,
+      showViewModal: false,
+      viewModalKey: 0,
     };
   },
   computed: {
-    ...mapState({
-      enabled: state => state.config.education.enabled,
-      list: state => state.config.education.list,
-    }),
-    modalItem() {
-      return this.list[this.modalKey];
+    enabled: {
+      get() {
+        return this.$store.state.config.education.enabled;
+      },
+      set(value) {
+        this.$store.commit('updateEducation', {
+          prop: 'enabled',
+          value,
+        });
+      },
     },
-    formatted() {
-      return {
-        enabled: this.enabled,
-        list: this.list,
-      };
+    list: {
+      get() {
+        return this.$store.state.config.education.list;
+      },
+      // set(value) {
+      //   this.$store.commit('updateExperience', {
+      //     prop: 'enabled',
+      //     value,
+      //   });
+      // },
+    },
+    viewEducationItem() {
+      return this.list[this.viewModalKey] || {};
     },
   },
   methods: {
-    showModal(key) {
-      this.modalKey = key;
-
-      this.$refs['education-modal'].show();
-    },
-    updateEnabled(value) {
-      this.$store.commit('updateEducationEnabled', value);
-    },
-    addEducationItem() {
-      // Only add if there's content
-      if (this.provider.length > 0 && this.course.length > 0 && this.duration.length > 0) {
-        this.$store.commit('addEducationItem', {
-          provider: this.provider,
-          course: this.course,
-          duration: this.duration,
-          paragraph: this.provider,
-          achievementList: this.achievementList,
-        });
-
-        this.provider = '';
-        this.course = '';
-        this.duration = '';
-        this.paragraph = '';
-        this.achievementList = [];
+    handle() {
+      if (this.enabled === false) {
+        this.$router.push('/skills-and-references');
       }
     },
-    removeEducationItem(index) {
-      this.store.commit('removeEducationItem', index);
+    svm(index) {
+      this.viewModalKey = index;
+      this.showViewModal = true;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.education-item-list {
-  border: 2px solid #ffffff;
-  border-radius: 7px;
-  padding: 7px;
+@import "@/assets/styles/variables.scss";
+
+
+.education-item, .add-education-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 
+  height: 100%;
+  padding: 30px 20px;
+  border: 2px solid $primaryColor;
+
+  cursor: pointer;
+  transition: 400ms linear;
+
   &:hover {
-    cursor: pointer;
-    text-decoration: underline;
+    background: $primaryColor;
+    border-color: 2px solid $primaryColorDarken2;
+    color: $primaryColorWhite;
   }
+
+  h4 {
+    flex-basis: 100%;
+    text-align: center;
+  }
+}
+
+.add-education-item {
+  border: 2px dashed $primaryColor;
 }
 </style>

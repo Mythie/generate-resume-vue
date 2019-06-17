@@ -1,51 +1,52 @@
 <template>
-  <div class="resume-submit text-center">
+  <div class="resume-submit">
     <div
       v-if="loading"
       class="text-center"
     >
-      <b-spinner
-        class="big-spinner"
-      />
-      <p>We're generating your resume...</p>
-    </div>
-    <div v-else-if="error">
-      <p class="font-weight-bold">
-        {{ errorString }}
-        <b-button
-          v-if="showRetry"
-          variant="outline"
-          @click="sendData"
-        >
-          Retry
-        </b-button>
+      <div class="spinner" />
+      <p class="semi-bold">
+        We're generating your resume...
       </p>
+    </div>
+    <div
+      v-else-if="error"
+      class="d-flex flex-wrap flex-direction-column"
+    >
+      <p class="lead">
+        {{ errorString }}
+      </p>
+      <button
+        v-if="showRetry"
+        class="btn btn-lg btn-primary mb-3"
+        @click="sendData"
+      >
+        Retry
+      </button>
 
-      <b-button
-        variant="outline"
+      <a
+        class="btn btn-outline"
         href="/"
       >
         Start again
-      </b-button>
+      </a>
     </div>
     <div v-else>
-      <p>Resume successfully created!</p>
-      <b-button
+      <p class="lead">
+        Resume successfully created!
+      </p>
+      <a
         :href="response.url"
-        variant="outline"
-        size="lg"
-        class="d-block mb-3"
+        class="d-block mb-3 btn btn-lg btn-primary"
       >
         Get my resume!
-      </b-button>
-      <b-button
+      </a>
+      <router-link
         to="/skills-and-references"
-        variant="outline"
-        size="lg"
         class="d-block mb-3"
       >
         Back
-      </b-button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -60,6 +61,7 @@ export default {
       error: false,
       showRetry: false,
       errorData: {},
+      errorString: '',
       response: {},
     };
   },
@@ -97,10 +99,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.big-spinner {
-  margin-bottom: 10px;
-  width: 75px;
+@import "@/assets/styles/variables.scss";
+
+.resume-submit {
+  text-align: center;
+}
+
+.spinner {
+  border: 7px solid $primaryColorWhite;
+  border-bottom: 7px solid $primaryColor;
   height: 75px;
-  border-width: 7px;
+  width: 75px;
+  display: inline-block;
+  border-radius: 100px;
+  transform: translateZ(0);
+  animation: spinner 1.1s infinite linear;
+
+  &::after {
+    border-radius: 100px;
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

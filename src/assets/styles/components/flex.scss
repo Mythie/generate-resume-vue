@@ -1,0 +1,27 @@
+.d-flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-direction-column {
+  flex-direction: column; 
+}
+
+.flex-direction-column-reverse {
+  flex-direction: column; 
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-items-center {
+  align-items: center;
+}
+
+.flex-justify-between {
+  justify-content: space-between
+}

@@ -1,0 +1,51 @@
+@import "@/assets/styles/variables.scss";
+
+div.form-group {
+  margin: 15px 0;
+}
+
+.form-list {
+  margin-bottom: 7px;
+}
+
+.form-label {
+  display: inline-block;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+.form-text {
+  height: 40px;
+  width: 100%;
+  padding: 0 7px;
+  margin-bottom: 7px;
+  color: $primaryColorLighten2;
+  border: 1px solid $primaryColor;
+  
+  transition: 400ms;
+  outline: none;
+
+  &:focus {
+    border-color: $primaryColorDarken2;
+  }
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 7px 7px;
+  margin-bottom: 7px;
+  color: $primaryColorLighten2;
+  border: 1px solid $primaryColor;
+  resize: none;
+  
+  transition: 400ms;
+  outline: none;
+
+  &:focus {
+    border-color: $primaryColorDarken2;
+  }
+}
+
+.form-description {
+  position: relative;
+}

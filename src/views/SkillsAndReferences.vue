@@ -1,23 +1,31 @@
 <template>
   <div class="skills-and-references container">
-    <div class="skills mb-5">
+    <div class="skills pb-3">
       <h2>Add your Skills</h2>
       <hr>
 
       <FormSwitch
+        v-model="skillsEnabled"
         label="Display skills?"
         class="form-switch mb-3"
-        :value="skillsEnabled"
-        @input="updateSkillsEnabled"
       />
 
-      <div v-if="skillsEnabled">
+      <div
+        v-if="skillsEnabled"
+        class="form-group"
+      >
+        <label
+          for="add-skill"
+          class="form-label"
+        >
+          Add Skill:
+        </label>
+
         <FormList
-          label="Skills List"
+          id="add-skill"
+          v-model="skillsList"
           button-text="Add Skill"
-          placeholder="e.g. C++"
-          :value="skillsList"
-          @input="updateSkillsList"
+          description="Enter your notable skills."
         />
       </div>
     </div>
@@ -25,136 +33,74 @@
       <h2>Enter your References</h2>
       <hr>
 
-      <b-modal
-        v-if="referenceList.length > 0"
-        ref="references-modal"
-        title="Reference"
-        ok-only
-      >
-        <h4>{{ modalItem.name }}</h4>
-        <p>
-          <strong>Company:</strong> {{ modalItem.company }} <br>
-          <strong>Position:</strong> {{ modalItem.position }} <br>
-          <strong>Mobile:</strong> {{ modalItem.mobile }} <br>
-          <strong>Email:</strong> {{ modalItem.email }} <br>
-        </p>
-      </b-modal>
-
-      <FormSwitch
-        label="Display references?"
-        class="mb-3"
-        :value="referencesEnabled"
-        @input="updateReferencesEnabled"
+      <AddReferenceModal v-model="showAddModal" />
+      <ViewReferenceModal
+        v-model="showViewModal"
+        :item="viewModalItem"
+        :index="viewModalKey"
       />
 
-      <div v-if="referencesEnabled">
-        <h4 class="mb-3">
-          Current References
-        </h4>
+      <FormSwitch
+        v-model="referencesEnabled"
+        label="Display References?"
+        class="mb-3"
+      />
 
-        <b-row v-if="referenceList.length > 0">
-          <b-col
-            v-for="(item, index) in referenceList"
-            :key="index"
-            md="3"
-            sm="4"
-            class="mb-3"
-          >
-            <div
-              class="reference-item-list"
-              @click="showModal(index)"
-            >
-              <h5>
-                {{ item.name }}
-                <small class="d-block">{{ item.company }}</small>
-                <small class="d-block">{{ item.position }}</small>
-              </h5>
-            </div>
-          </b-col>
-        </b-row>
+      <div
+        v-if="referencesEnabled"
+        class="row"
+      >
         <div
-          v-else
-          class="mb-3"
+          v-for="(item, index) in referencesList"
+          :key="index"
+          class="col-md-3 test mb-3"
         >
-          No references items yet, try adding one..
+          <div
+            class="reference-item"
+            @click="svm(index)"
+          >
+            <h4 class="w-100">
+              {{ item.name }}
+            </h4>
+            <span>{{ item.company }}</span>
+          </div>
         </div>
-
-        <!-- Name -->
-        <b-form-group
-          label="Name"
-        >
-          <b-form-input v-model="name" />
-        </b-form-group>
-        <!-- Company -->
-        <b-form-group
-          label="Company"
-        >
-          <b-form-input v-model="company" />
-        </b-form-group>
-        <!-- Role -->
-        <b-form-group
-          label="Position"
-        >
-          <b-form-input v-model="position" />
-        </b-form-group>
-        <!-- Role -->
-        <b-form-group
-          label="Mobile"
-        >
-          <b-form-input
-            v-model="mobile"
-            placeholder="If left empty it won't be displayed, at least one contact method must be entered"
-          />
-        </b-form-group>
-        <!-- Role -->
-        <b-form-group
-          label="Email"
-        >
-          <b-form-input
-            v-model="email"
-            placeholder="If left empty it won't be displayed, at least one contact method must be entered"
-          />
-        </b-form-group>
-        <b-button
-          class="mb-3"
-          size="lg"
-          variant="outline"
-          @click="addReferenceItem"
-        >
-          Add reference&nbsp;
-          <fa-icon icon="plus" />
-        </b-button>
-      <!-- TODO: Email and Mobile -->
+        <div class="col-md-3 test mb-3">
+          <div
+            class="add-reference-item"
+            @click="showAddModal = true"
+          >
+            <fa-icon
+              class="d-block"
+              icon="plus"
+              size="2x"
+            />
+          </div>
+        </div>
       </div>
     </div>
+
     <!-- Navigation -->
-    <b-row>
-      <b-col
-        xs="6"
-        class="d-flex flex-row"
+    <div class="row">
+      <div
+        class="col-xs-6 d-flex flex-items-center flex-row"
       >
-        <b-button
-          variant="outline"
-          to="/education"
-          size="lg"
-        >
+        <router-link to="/education">
           Back
-        </b-button>
-      </b-col>
-      <b-col
-        xs="6"
-        class="d-flex flex-row-reverse"
+        </router-link>
+      </div>
+      <div
+        class="col-xs-6 d-flex flex-items-center flex-row-reverse"
       >
-        <b-button
-          variant="outline"
+        <router-link
           to="/submit"
-          size="lg"
+          class="btn btn-outline btn-lg"
         >
           Finish&nbsp;
           <fa-icon icon="arrow-right" />
-        </b-button>
-      </b-col>
-    </b-row>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -163,71 +109,112 @@ import { mapState } from 'vuex';
 
 import FormList from '@/components/common/FormList.vue';
 import FormSwitch from '@/components/common/FormSwitch.vue';
+import AddReferenceModal from '@/components/references/AddReferenceModal.vue';
+import ViewReferenceModal from '@/components/references/ViewReferenceModal.vue';
 
 export default {
   components: {
     FormList,
     FormSwitch,
+    AddReferenceModal,
+    ViewReferenceModal,
   },
   data() {
     return {
-      name: '',
-      company: '',
-      position: '',
-      mobile: '',
-      email: '',
-      modalKey: 0,
+      showAddModal: false,
+      showViewModal: false,
+      viewModalKey: 0,
     };
   },
   computed: {
-    ...mapState({
-      skillsEnabled: state => state.config.skills.enabled,
-      skillsList: state => state.config.skills.list,
-      referencesEnabled: state => state.config.references.enabled,
-      referenceList: state => state.config.references.list,
-    }),
-    modalItem() {
-      return this.referenceList[this.modalKey];
+    skillsEnabled: {
+      get() {
+        return this.$store.state.config.skills.enabled;
+      },
+      set(value) {
+        this.$store.commit('updateSkills', {
+          prop: 'enabled',
+          value,
+        });
+      },
+    },
+    skillsList: {
+      get() {
+        return this.$store.state.config.skills.list;
+      },
+      set(value) {
+        this.$store.commit('updateSkills', {
+          prop: 'list',
+          value,
+        });
+      },
+    },
+
+    referencesEnabled: {
+      get() {
+        return this.$store.state.config.references.enabled;
+      },
+      set(value) {
+        this.$store.commit('updateReferencesEnabled', value);
+      },
+    },
+    referencesList() {
+      return this.$store.state.config.references.list;
+    },
+    viewModalItem() {
+      return this.referencesList[this.viewModalKey] || {};
+    },
+    shouldNavigateForward() {
+      return this.skillsEnabled === false && this.referencesEnabled === false;
+    },
+  },
+  watch: {
+    shouldNavigateForward() {
+      if (this.shouldNavigateForward === false) {
+        this.$router.push('/submit');
+      }
     },
   },
   methods: {
-    updateSkillsEnabled(value) {
-      this.$store.commit('updateSkillsEnabled', value);
-    },
-    updateSkillsList(value) {
-      this.$store.commit('updateSkillsList', value);
-    },
-    updateReferencesEnabled(value) {
-      this.$store.commit('updateReferencesEnabled', value);
-    },
-    addReferenceItem() {
-      this.$store.commit('addReferenceItem', {
-        name: this.name,
-        company: this.company,
-        position: this.position,
-        mobile: this.mobile,
-        email: this.email,
-      });
-    },
-    showModal(key) {
-      this.modalKey = key;
-
-      this.$refs['references-modal'].show();
+    svm(index) {
+      this.viewModalKey = index;
+      this.showViewModal = true;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.reference-item-list {
-  border: 2px solid #ffffff;
-  border-radius: 7px;
-  padding: 7px;
+@import "@/assets/styles/variables.scss";
+
+
+.reference-item, .add-reference-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 
+  height: 100%;
+  padding: 30px 20px;
+  border: 2px solid $primaryColor;
+
+  cursor: pointer;
+  transition: 400ms linear;
+
   &:hover {
-    cursor: pointer;
-    text-decoration: underline;
+    background: $primaryColor;
+    border-color: 2px solid $primaryColorDarken2;
+    color: $primaryColorWhite;
   }
+
+  h4 {
+    flex-basis: 100%;
+    text-align: center;
+  }
+}
+
+.add-reference-item {
+  border: 2px dashed $primaryColor;
 }
 </style>

@@ -1,77 +1,25 @@
 /* eslint-disable no-param-reassign */
+
 import Vue from 'vue';
 import Vuex from 'vuex';
-import initialState from './state';
+
+import state from './store/state';
+import mutations from './store/mutations';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    ...initialState,
-  },
+  state,
   getters: {
-    colors: state => state.colors,
-    applicant: state => state.config.applicant,
-    currentRole: state => state.config.currentRole,
-    experience: state => state.config.experience,
-    education: state => state.config.education,
-    skills: state => state.config.skills,
-    references: state => state.config.references,
+    colors: s => s.colors,
+    applicant: s => s.config.applicant,
+    currentRole: s => s.config.currentRole,
+    experience: s => s.config.experience,
+    education: s => s.config.education,
+    skills: s => s.config.skills,
+    references: s => s.config.references,
   },
-  mutations: {
-    updateColor(state, payload) {
-      state.colors[payload.prop] = payload.value;
-    },
-    updateApplicant(state, payload) {
-      state.config.applicant[payload.prop] = payload.value;
-    },
-    updateApplicantContact(state, payload) {
-      state.config.applicant[payload.prop] = payload.data;
-    },
-    updateCurrentRoleEnabled(state, status) {
-      state.config.currentRole.enabled = status;
-    },
-    updateCurrentRole(state, payload) {
-      state.config.currentRole.title = payload.title;
-      state.config.currentRole.company = payload.company;
-      state.config.currentRole.duration = payload.duration;
-      state.config.currentRole.achievementList = payload.achievementList;
-      state.config.currentRole.paragraph = payload.paragraph;
-    },
-    updateExperienceEnabled(state, status) {
-      state.config.experience.enabled = status;
-    },
-    addExperienceItem(state, payload) {
-      state.config.experience.list.push(payload);
-    },
-    removeExperienceItem(state, index) {
-      state.config.experience.list.splice(index, 1);
-    },
-    updateEducationEnabled(state, status) {
-      state.config.education.enabled = status;
-    },
-    addEducationItem(state, payload) {
-      state.config.education.list.push(payload);
-    },
-    removeEducationItem(state, index) {
-      state.config.education.list.splice(index, 1);
-    },
-    updateSkillsEnabled(state, status) {
-      state.config.skills.enabled = status;
-    },
-    updateSkillsList(state, payload) {
-      state.config.skills.list = payload;
-    },
-    updateReferencesEnabled(state, status) {
-      state.config.references.enabled = status;
-    },
-    addReferenceItem(state, payload) {
-      state.config.references.list.push(payload);
-    },
-    removeReferenceItem(state, index) {
-      state.config.references.list.splice(index, 1);
-    },
-  },
+  mutations,
   actions: {
 
   },

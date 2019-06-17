@@ -1,16 +1,19 @@
 <template>
   <div
     class="color-input"
+    tabIndex="0"
     @mouseleave="show = false"
+    @keyup.escape="show = false"
+    @keyup.enter="show = true"
   >
-    <h4 class="text-center">
+    <h3 class="text-center">
       {{ label }}
-    </h4>
+    </h3>
     <!-- Not really a form anymore but it stil works -->
     <div class="color-picker-form">
       <div
         class="color-picker-input"
-        :style="{ background: value }"
+        :style="{ background: value, 'border': `1px solid ${borderColor}` }"
         @click="show = !show"
       >
         <span :style="{ color: textColor }">{{ value }}</span>
@@ -26,8 +29,7 @@
           class="color-picker-selector"
         >
           <ColorPicker
-            :value="value"
-            @input="setColor"
+            v-model="color"
           />
         </div>
       </transition>
@@ -59,22 +61,26 @@ export default {
     };
   },
   computed: {
-    color() {
-      return tinycolor(this.value);
+    color: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        const color = `rgba(${value.rgba.r}, ${value.rgba.g}, ${value.rgba.b}, ${value.rgba.a})`;
+        this.$emit('input', color);
+      },
+    },
+    parsedColor() {
+      return tinycolor(this.color);
     },
     textColor() {
-      return this.color.isDark() ? '#FFF' : '#222';
+      return this.parsedColor.isDark() ? '#FFF' : '#222';
     },
     borderColor() {
-      return this.color.darken(15).toString();
+      return this.parsedColor.darken(5).toString();
     },
   },
   methods: {
-    setColor(payload) {
-      // eslint-disable-next-line
-      const color = `rgba(${payload.rgba.r}, ${payload.rgba.g}, ${payload.rgba.b}, ${payload.rgba.a})`
-      this.$emit('input', color);
-    },
     isValidColor(color) {
       const re = /^(?:rgba\(\d{1,3},\d{1,3},\d{1,3},\d(?:\.\d)?\)|rgb\(\d{1,3},\d{1,3},\d{1,3}\)|#[0-9A-F]{6})$/gi;
       return re.test(color.replace(' ', ''));
@@ -84,36 +90,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/variables.scss';
+@import '@/assets/styles/variables.scss';
 
   .color-input {
-    padding-bottom: 10px;
+    padding-bottom: 20px;
+    outline: none;
   }
 
-  h4 {
-    padding-bottom: 7px;
+  h3 {
+    padding-bottom: 15px;
+    margin: 0;
+    // text-decoration: underline;
+    text-transform: uppercase;
   }
 
   .form-group {
     margin-bottom: 0;
+    display: flex;
   }
 
   .color-picker-form {
-    border: 1px solid darken($backgroundColor, 5%);
+    border: 1px solid darken($backgroundColor, 15%);
     position: relative;
     background: #ffffff;
     padding: 10px;
-    border-radius: 7px;
     cursor: pointer;
 
     .color-picker-input{
-      padding: 20px;
-      height: 80px;
-      // width: 150px;
-      border-radius: 7px;
       display: flex;
+      height: 80px;
+      padding: 20px;
+      font-weight: 600;
+
       align-items: center;
       justify-content: center;
+
+      // border-radius: 7px;
     }
 
     .color-picker-selector {

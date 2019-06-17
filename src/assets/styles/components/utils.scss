@@ -1,0 +1,65 @@
+@import '@/assets/styles/variables.scss';
+
+.box-shadow {
+  box-shadow: 1px 3px 5px darken($backgroundColor, 15%);
+}
+
+.d-block {
+  display: block;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+@for $i from 0 to 5 {
+  .mx-#{$i} {
+    margin: 0 ($i * 5px) !important;
+  }
+  .my-#{$i} {
+    margin: ($i * 5px) 0 !important;
+  }
+  .mt-#{$i} {
+    margin-top: ($i * 5px) !important;
+  }
+  .mr-#{$i} {
+    margin-right: ($i * 5px) !important;
+  }
+  .mb-#{$i} {
+    margin-bottom: ($i * 5px) !important;
+  }
+  .ml-#{$i} {
+    margin-left: ($i * 5px) !important;
+  }
+
+  .px-#{$i} {
+    padding: 0 ($i * 5px) !important;
+  }
+  .py-#{$i} {
+    padding: ($i * 5px) 0 !important;
+  }
+  .pt-#{$i} {
+    padding-top: ($i * 5px) !important;
+  }
+  .pr-#{$i} {
+    padding-right: ($i * 5px) !important;
+  }
+  .pb-#{$i} {
+    padding-bottom: ($i * 5px) !important;
+  }
+  .pl-#{$i} {
+    padding-left: ($i * 5px) !important;
+  }
+}
+
+.mx-auto {
+  margin: 0 auto;
+}
+
+.my-auto {
+  margin: auto 0;
+}
+
+.w-100 {
+  // width: 100%;
+}
