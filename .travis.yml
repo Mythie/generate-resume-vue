@@ -1,8 +1,15 @@
 language: node_js
+
 node_js:
 - stable
+
+branches:
+  only:
+    - master
+
 after_success:
 - "./trigger_travis.sh --pro Mythie generate-resume $TRAVIS_ACCESS_TOKEN"
+
 env:
   global:
     - secure: uuAxBBT06vgvREsmfBUt1itxrR5w5KfU3OdC/oDecI3l/Q91lKy78is6IgChd58H4DxMeLfg1dZADJx8FfUeGmrvZ15MfKPOGiWmi6pnkux3Jml6ZuPkGI93v8ThiE+VuEpmM8mY2uXzuhGFeFseHWdeuwz41RyohFhQamOjSEng0GoONy3Kve/ogrlto51EvzkVttgbHYl+Sjr89yn+386Z8pHGmCZDLPE9ltkbtukFQp+RttFVIHEf2+/EmTtSdVsznfKhP0mZ7UXZ9JWdMwkEIFPm6PfOySbYx8nct+GmDxZzy4YWegYtS+EMtJD7tNDOxP9Cb4XNrXDuyDp7umQk6Mj7deGJf2IpNa+16dau7+FyR8pahhe/ANa6IaWKTG4ZL7bY1HmCmlNmI2LAaObLnfpUrb6usDfqXxTJrgr8S5ZlmKCU2QqAcf4/8bfbrC9vDsY/FtvrjjbiF+VwZNTVz1iDrcYJdlAcI763p53unXwTwyMAoadsFXPYjY4qkyW4y13DqWeiqVsd+QFWMRGlWD4nm73prCeg7tS3Ja/e+R4kjSLGLCRcPuDLi4x1M4NTrdn8wCozMUMDJVdGPjRbyrNqPINLzolD+Q9lZjEpj6UPAZJEK/ONKzj7lY+ECrijpqC3Qnt80O/MF9npW3LgTzAv29NKyLdzFWze7eg=
