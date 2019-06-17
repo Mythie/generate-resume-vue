@@ -6,36 +6,76 @@
     <hr>
     <div class="row">
       <div class="col-md-4">
-        <ColorInput
-          :value="textColor"
-          class="color-input mb-2"
-          label="Text Color"
-          @input="updateTextColor"
+        <div class="form-group">
+          <label
+            for=""
+            class="form-label"
+          >
+            Style:
+          </label>
+
+          <select
+            v-model="presetSelected"
+            class="form-select"
+          >
+            <option
+              v-for="(preset, index) in presetColors"
+              :key="index"
+              :value="index"
+            >
+              {{ preset.name }}
+            </option>
+          </select>
+
+          <div class="form-description small">
+            Select a preset color.
+          </div>
+        </div>
+
+        <FormSwitch
+          v-model="enabled"
+          label="Advanced?"
+          class="mb-3"
         />
-        <ColorInput
-          :value="sideBarColor"
-          class="color-input mb-2"
-          label="Sidebar Color"
-          @input="updateSidebarColor"
-        />
-        <ColorInput
-          :value="sideBarTextColor"
-          class="color-input mb-2"
-          label="Sidebar Text Color"
-          @input="updateSidebarTextColor"
-        />
-        <ColorInput
-          :value="stripeColor"
-          class="color-input mb-2"
-          label="Stripe Color"
-          @input="updateStripeColor"
-        />
-        <ColorInput
-          :value="horizontalRuleColor"
-          class="color-input mb-2"
-          label="Horizontal Rule Color"
-          @input="updateHorizontalRuleColor"
-        />
+
+        <transition
+          name="custom-classes-transition"
+          enter-active-class="animated fadeInLeft fast"
+          leave-active-class="animated fadeOutLeft fast"
+        >
+          <div v-if="enabled">
+            <ColorInput
+              :value="textColor"
+              class="color-input mb-2"
+              label="Text Color"
+              @input="updateTextColor"
+            />
+            <ColorInput
+              :value="sideBarColor"
+              class="color-input mb-2"
+              label="Sidebar Color"
+              @input="updateSidebarColor"
+            />
+            <ColorInput
+              :value="sideBarTextColor"
+              class="color-input mb-2"
+              label="Sidebar Text Color"
+              @input="updateSidebarTextColor"
+            />
+            <ColorInput
+              :value="stripeColor"
+              class="color-input mb-2"
+              label="Stripe Color"
+              @input="updateStripeColor"
+            />
+            <ColorInput
+              :value="horizontalRuleColor"
+              class="color-input mb-2"
+              label="Horizontal Rule Color"
+              @input="updateHorizontalRuleColor"
+            />
+          </div>
+        </transition>
       </div>
       <div class="col-md-8 resume-container">
         <ResumePreview
@@ -67,11 +107,22 @@
 import { mapState } from 'vuex';
 import ColorInput from '@/components/colors/ColorInput.vue';
 import ResumePreview from '@/components/colors/ResumePreview.vue';
+import FormSwitch from '@/components/common/FormSwitch.vue';
+
+import presetColors from '@/store/presetColors';
 
 export default {
   components: {
     ColorInput,
     ResumePreview,
+    FormSwitch,
+  },
+  data() {
+    return {
+      enabled: false,
+      presetColors,
+      presetSelected: 0,
+    };
   },
   computed: {
     ...mapState({
@@ -81,6 +132,11 @@ export default {
       horizontalRuleColor: state => state.colors.horizontalRuleColor,
       textColor: state => state.colors.textColor,
     }),
+  },
+  watch: {
+    presetSelected() {
+      this.updateColorsPreset(this.presetSelected);
+    },
   },
   methods: {
     updateSidebarColor(value) {
@@ -112,6 +168,14 @@ export default {
         prop: 'horizontalRuleColor',
         value,
       });
+    },
+    updateColorsPreset(index) {
+      console.log(index);
+      this.updateSidebarColor(this.presetColors[index].sideBarColor);
+      this.updateSidebarTextColor(this.presetColors[index].sideBarTextColor);
+      this.updateStripeColor(this.presetColors[index].stripeColor);
+      this.updateTextColor(this.presetColors[index].textColor);
+      this.updateHorizontalRuleColor(this.presetColors[index].horizontalRuleColor);
     },
   },
 };

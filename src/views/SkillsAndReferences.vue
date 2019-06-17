@@ -208,7 +208,7 @@ export default {
 
   &:hover {
     background: $primaryColor;
-    border-color: 2px solid $primaryColorDarken2;
+    border: 2px solid $primaryColorDarken2;
     color: $primaryColorWhite;
   }
 
