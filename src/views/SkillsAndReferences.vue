@@ -1,7 +1,9 @@
 <template>
   <div class="skills-and-references container">
     <div class="skills pb-3">
-      <h2>Add your Skills</h2>
+      <h2 class="title">
+        Add your Skills
+      </h2>
       <hr>
 
       <FormSwitch
@@ -30,7 +32,9 @@
       </div>
     </div>
     <div class="references mb-3">
-      <h2>Enter your References</h2>
+      <h2 class="title">
+        Enter your References
+      </h2>
       <hr>
 
       <AddReferenceModal v-model="showAddModal" />
