@@ -7,10 +7,13 @@ import CurrentRole from './views/CurrentRole.vue';
 import Experience from './views/Experience.vue';
 import Education from './views/Education.vue';
 import SkillsAndReferences from './views/SkillsAndReferences.vue';
+import Submit from './views/Submit.vue';
+
+const DEFAULT_TITLE = 'Generate Resume';
 
 Vue.use(Router);
 
-export default new Router({
+const vrouter = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   scrollBehavior(to, from, savedPosition) {
@@ -26,36 +29,63 @@ export default new Router({
       path: '/colors',
       name: 'colors',
       component: Colors,
+      meta: {
+        title: `${DEFAULT_TITLE} - Colors`,
+      },
     },
     {
       path: '/applicant',
       name: 'applicant',
       component: Applicant,
+      meta: {
+        title: `${DEFAULT_TITLE} - Applicant`,
+      },
     },
     {
       path: '/current-role',
       name: 'current-role',
       component: CurrentRole,
+      meta: {
+        title: `${DEFAULT_TITLE} - Current Role`,
+      },
     },
     {
       path: '/experience',
       name: 'experience',
       component: Experience,
+      meta: {
+        title: `${DEFAULT_TITLE} - Experience`,
+      },
     },
     {
       path: '/education',
       name: 'education',
       component: Education,
+      meta: {
+        title: `${DEFAULT_TITLE} - Education`,
+      },
     },
     {
       path: '/skills-and-references',
       name: 'skills-and-references',
       component: SkillsAndReferences,
+      meta: {
+        title: `${DEFAULT_TITLE} - Skills & References`,
+      },
     },
     {
       path: '/submit',
       name: 'submit',
-      component: () => import('./views/Submit.vue'),
+      component: Submit,
+      meta: {
+        title: `${DEFAULT_TITLE} - Submit`,
+      },
     },
   ],
 });
+
+vrouter.beforeEach((to, from) => {
+  document.title = to.meta.title || DEFAULT_TITLE;
+});
+
+export default vrouter;

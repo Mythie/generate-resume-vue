@@ -1,6 +1,8 @@
 <template>
   <div class="current-role container">
-    <h2 class="title">
+    <h2
+      class="title"
+    >
       Enter your Current Role
     </h2>
     <hr>
