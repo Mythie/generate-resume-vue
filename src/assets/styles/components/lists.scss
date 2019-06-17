@@ -1,0 +1,54 @@
+@import "@/assets/styles/variables.scss";
+
+ul.list-items {
+  background: #ffffff;
+  // border: 1px solid $primaryColor;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: list-item;
+    padding: 7px 10px;
+    border-bottom: 1px solid $primaryColor;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+li {
+  list-style-position: inside;
+}
+
+div.list-items {
+  background: #ffffff;
+  border: 1px solid darken($backgroundColor, 15%);
+  padding: 0;
+  margin: 0;
+
+  div.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 7px;
+    border-bottom: 1px solid #ccc;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .list-item-content {
+
+    }
+    
+    .badge {
+      background: $primaryColor;
+      color: $primaryColorWhite;
+      padding: 3px 10px;
+      font-weight: 600;
+      border-radius: 100px;
+    }
+  }
+
+}

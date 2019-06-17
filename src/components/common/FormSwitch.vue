@@ -1,16 +1,11 @@
 <template>
   <div class="form-switch">
-    <div
-      class="switch-holder"
-      @click="$emit('input', !value)"
+    <input
+      :id="id"
+      v-model="checked"
+      type="checkbox"
     >
-      <div :class="['switch', 'on', { active: value }]">
-        Yes
-      </div>
-      <div :class="['switch', 'off', { active: !value }]">
-        No
-      </div>
-    </div>
+    <label :for="id" />
     <div class="label">
       {{ label }}
     </div>
@@ -29,57 +24,76 @@ export default {
       default: '',
     },
   },
+  computed: {
+    id() {
+      return Math.random().toString(36).substring(2);
+    },
+    checked: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      },
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/variables.scss";
+@import "@/assets/styles/variables.scss";
+
+// Hide the actual checkbox
+input[type=checkbox] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+label {
+  // Make it look clickable
+  display: block;
+  position: relative;
+  width: 50px;
+  height: 25px;
+  background: $primaryDisabled;
+  border-radius: 100px;
+  cursor: pointer;
+  // I dunno
+  text-indent: -9999px;
+
+// Create our lil circle
+  &:after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+  }
+}
+
+input:checked + label {
+  background: $primaryColor;
+}
+
+input:checked + label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
 
 .form-switch {
   display: flex;
   padding: 7px 0;
 }
-.switch-holder {
-  display: flex;
-  padding: 4px;
-  background: #ffffff;
-  width: 100px;
-  border-radius: 7px;
-  cursor: pointer;
-  border: 1px solid darken($backgroundColor, 5%);
-}
-
-.switch {
-  line-height: 32px;
-  text-align: center;
-  height: 32px;
-  width: 50%;
-  transition: 600ms ease-in-out;
-  border-radius: 7px;
-}
 
 .label {
+  font-weight: 600;
+  font-size: 0.8rem;
   padding-left: 10px;
   align-self: center;
-}
-
-.on {
-  color: #222222;
-
-  &.active {
-    background: #2ecc71;
-    color: #ffffff;
-  }
-}
-
-.off {
-  border-top-right-radius: 7px;
-  border-bottom-right-radius: 7px;
-  color: #222222;
-
-  &.active {
-    background: #e74c3c;
-    color: #ffffff;
-  }
 }
 </style>

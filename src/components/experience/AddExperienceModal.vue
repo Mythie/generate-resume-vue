@@ -1,15 +1,16 @@
 <template>
-  <div class="current-role container">
-    <h2>Enter your Current Role</h2>
-    <hr>
+  <div
+    class="add-experience-modal"
+  >
+    <Modal
+      v-model="show"
+      class="add-experience-item-modal"
+    >
+      <template v-slot:title>
+        Add Experience Item
+      </template>
 
-    <FormSwitch
-      v-model="enabled"
-      class="mb-3"
-      label="Display Current Role?"
-      @input="handle"
-    />
-    <div v-if="enabled">
+      <!-- Form -->
       <!-- Company -->
       <div class="form-group">
         <label
@@ -24,6 +25,7 @@
           v-model="company"
           type="text"
           class="form-text"
+          autofocus="true"
         >
 
         <div class="form-description small">
@@ -106,112 +108,91 @@
           description="An achievement whilst in your role, if left empty it will be hidden from the final resume."
         />
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-xs-6 d-flex flex-row flex-items-center">
-        <router-link to="/applicant">
-          Back
-        </router-link>
-      </div>
-      <div class="col-xs-6 d-flex flex-row-reverse">
-        <router-link
-          class="btn btn-lg btn-outline"
-          to="/experience"
-        >
-          Experience&nbsp;
-          <fa-icon icon="arrow-right" />
-        </router-link>
-      </div>
-    </div>
+      <template v-slot:footer>
+        <div class="row">
+          <div class="col-sm-6 flex-items-center d-flex">
+            <a
+              href="#"
+              @click.prevent="show = false"
+            >
+              Cancel
+            </a>
+          </div>
+          <div class="col-sm-6 d-flex flex-row-reverse">
+            <button
+              class="btn btn-primary"
+              @click="addExperienceItem"
+            >
+              <!-- TODO: Avoid this -->
+              Add Item&nbsp;
+              <fa-icon icon="plus" />
+            </button>
+          </div>
+        </div>
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
-import FormSwitch from '@/components/common/FormSwitch.vue';
 import FormList from '@/components/common/FormList.vue';
+import Modal from '@/components/common/Modal.vue';
 
 export default {
-  name: 'CurrentRole',
+  name: 'AddExperienceModal',
   components: {
-    FormSwitch,
     FormList,
+    Modal,
+  },
+  props: {
+    value: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      company: '',
+      title: '',
+      duration: '',
+      paragraph: '',
+      achievementList: [],
+    };
   },
   computed: {
-    enabled: {
+    show: {
       get() {
-        return this.$store.state.config.currentRole.enabled;
+        return this.value;
       },
       set(value) {
-        this.$store.commit('updateCurrentRole', {
-          prop: 'enabled',
-          value,
-        });
+        this.$emit('input', value);
       },
     },
-    company: {
-      get() {
-        return this.$store.state.config.currentRole.company;
-      },
-      set(value) {
-        this.$store.commit('updateCurrentRole', {
-          prop: 'company',
-          value,
-        });
-      },
-    },
-    title: {
-      get() {
-        return this.$store.state.config.currentRole.title;
-      },
-      set(value) {
-        this.$store.commit('updateCurrentRole', {
-          prop: 'title',
-          value,
-        });
-      },
-    },
-    duration: {
-      get() {
-        return this.$store.state.config.currentRole.duration;
-      },
-      set(value) {
-        this.$store.commit('updateCurrentRole', {
-          prop: 'duration',
-          value,
-        });
-      },
-    },
-    paragraph: {
-      get() {
-        return this.$store.state.config.currentRole.paragraph;
-      },
-      set(value) {
-        this.$store.commit('updateCurrentRole', {
-          prop: 'paragraph',
-          value,
-        });
-      },
-    },
-    achievementList: {
-      get() {
-        return this.$store.state.config.currentRole.achievementList;
-      },
-      set(value) {
-        this.$store.commit('updateCurrentRole', {
-          prop: 'achievementList',
-          value,
-        });
-      },
+    formatted() {
+      return {
+        company: this.company,
+        title: this.title,
+        duration: this.duration,
+        paragraph: this.paragraph,
+        achievementList: this.achievementList,
+      };
     },
   },
   methods: {
-    handle() {
-      if (this.enabled === false) {
-        this.$router.push('/experience');
+    addExperienceItem() {
+      if (this.company.length > 0 && this.title.length > 0 && this.duration.length > 0) {
+        this.$store.commit('addExperienceItem', this.formatted);
+        this.show = false;
+        this.resetFields();
       }
+    },
+    resetFields() {
+      this.company = '';
+      this.title = '';
+      this.duration = '';
+      this.paragraph = '';
+      this.achievementList = [];
     },
   },
 };
@@ -219,7 +200,4 @@ export default {
 
 <style lang="scss" scoped>
 
-.buffer {
-  margin-bottom: 10px;
-}
 </style>

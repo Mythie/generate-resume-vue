@@ -1,55 +1,50 @@
 <template>
-  <div class="form-list">
-    <b-form-group
-      :label="label"
-    >
-      <div class="d-flex flex-wrap align-items-center justify-content-between">
-        <b-form-input
+  <div>
+    <div class="form-list">
+      <div class="add-item-form">
+        <input
+          :id="id"
           v-model="name"
-          class="text-input"
-          :placeholder="placeholder"
+          type="text"
+          class="form-text"
           @keyup.enter="addItem"
-        />
-        <b-button
-          variant="outline"
+        >
+        <button
+          class="btn btn-primary"
           @click="addItem"
         >
           {{ buttonText }}
-        </b-button>
+        </button>
       </div>
-      <template
-        v-if="description.length > 0"
-        slot="description"
+    </div>
+    <div
+      v-if="description.length > 0"
+      class="form-description small"
+    >
+      {{ description }}
+    </div>
+    <div class="my-3">
+      <div
+        v-if="value.length > 0"
+        class="list-items"
       >
-        <span class="text-white">
-          {{ description }}
-        </span>
-      </template>
-    </b-form-group>
-    <b-list-group class="buffer">
-      <transition-group
-        name="custom-classes-transition"
-        mode="out-in"
-        enter-active-class="animated fast slideInDown"
-        leave-active-class="animated fast slideOutUp"
-      >
-        <b-list-group-item
+        <div
           v-for="(item, index) in value"
-          :key="index"
-          class="items-list d-flex justify-content-between align-items-center"
+          :key="item + index"
+          class="list-item"
         >
-          {{ item }}
-          <b-badge
-            variant="danger"
-            class="remove-item"
-            pill
+          <div class="list-item-content">
+            {{ item }}
+          </div>
+          <div
+            class="badge small clickable"
             @click="removeItem(index)"
           >
             Remove
-          </b-badge>
-        </b-list-group-item>
-      </transition-group>
-    </b-list-group>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -60,21 +55,17 @@ export default {
       type: Array,
       required: true,
     },
-    label: {
-      type: String,
-      required: true,
-    },
     buttonText: {
       type: String,
       required: true,
     },
-    placeholder: {
-      type: String,
-      default: '',
-    },
     description: {
       type: String,
       default: '',
+    },
+    id: {
+      type: String,
+      required: true,
     },
   },
   data() {
@@ -102,11 +93,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.add-item-form {
+  @media screen and (min-width:600px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
 
-.text-input {
-  width: 100%;
-  margin-bottom: 7px;
-
+.form-text {
   @media screen and (min-width: 600px) {
     width: auto;
     flex-grow: 2;

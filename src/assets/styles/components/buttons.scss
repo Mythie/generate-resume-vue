@@ -1,0 +1,43 @@
+@import "@/assets/styles/variables.scss";
+
+a.btn, button.btn, button {
+  background: #eeeeee;
+  color: #333333;
+  font-weight: 600;
+  padding: 10px 15px;
+  border: 1px solid darken(#eeeeee, 5%);
+  text-decoration: none;
+  transition: 400ms;
+  cursor: pointer;
+
+  &:hover {
+    background: darken(#eeeeee, 5%);
+  }
+
+  &.btn-lg {
+    padding: 15px 20px;
+  }
+
+  &.btn-outline {
+    color: $primaryColor;
+    border: 2px solid $primaryColor;
+    background: transparent;
+
+    &:hover {
+      border-color: darken($primaryColor, 5%);
+      background: $primaryColor;
+      color: mix($primaryColor, #ffffff, 15%);
+    }
+  }
+
+  &.btn-primary {
+    background: $primaryColor;
+    color: $primaryColorWhite;
+    border-color: $primaryColorDarken;
+
+    &:hover {
+      background: $primaryColorDarken;
+      border-color: $primaryColorDarken2;
+    }
+  }
+}

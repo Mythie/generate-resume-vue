@@ -1,22 +1,21 @@
 <template>
   <div class="generator-hero">
     <h1>
-      Resume Generator
+      Create a Stunning Resume
     </h1>
     <p>
-      Build a stunning resume in minutes, stand out from the competition!
+      Stand out from the competition, build your resume now!
     </p>
-    <hr>
-    <b-button
-      class="mx-auto"
-      variant="outline"
-      size="lg"
+    <hr class="large-gap">
+    <router-link
       to="/colors"
+      class="btn btn-outline btn-lg"
       @mouseover.native="addAnimation"
-      @mouseout.native="removeAnimation"
+      @mouseleave.native="removeAnimation"
     >
-      Get started
-    </b-button>
+      Get Started
+      </a>
+    </router-link>
   </div>
 </template>
 
@@ -35,24 +34,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/variables.scss';
+@import '@/assets/styles/variables.scss';
 
 .generator-hero {
   align-self: center;
   text-align: center;
-  color: $textColor;
+  color: $primaryColor;
 
   h1 {
-    @media screen and (max-width: 600px) {
-      font-size: 2.5rem;
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin-bottom: 7px;
+    // text-shadow: 1px 1px 3px;
+    // word-wrap: break-word;
+
+    @media screen and (min-width: 600px) {
+      font-size: 4rem;
     }
-    font-size: 4rem;
-    font-weight: 600;
   }
 
   p {
-    margin: 0;
-    padding: 0;
+    font-weight: 600;
+    color: $primaryColorLighten;
+    margin: 0 0 0 0;
+    padding: 0 0 7px 0;
+  }
+
+  a {
+    display: inline-block;
+    width: auto;
+    text-decoration: none;
   }
 }
 

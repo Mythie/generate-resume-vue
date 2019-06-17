@@ -1,149 +1,124 @@
 <template>
   <div class="experience container">
-    <h2>Your Experience</h2>
+    <h2 class="title">
+      Your Experience
+    </h2>
     <hr>
 
-    <b-modal
-      v-if="list.length > 0"
-      ref="experience-modal"
-      title="Experience"
-      ok-only
-    >
-      <h4>{{ modalItem.company }}</h4>
-      <p>
-        <strong>Title:</strong> {{ modalItem.title }} <br>
-        <strong>Duration:</strong> {{ modalItem.duration }} <br>
-        <strong>Paragraph:</strong> {{ modalItem.paragraph }} <br>
-        <strong>Achievements:</strong>
-        <ul>
-          <li
-            v-for="(achievement, index) in modalItem.achievementList"
-            :key="index"
-          >
-            {{ achievement }}
-          </li>
-        </ul>
-      </p>
-    </b-modal>
+    <AddExperienceModal v-model="showAddModal" />
+    <ViewExperienceModal
+      v-model="showViewModal"
+      :item="viewExperienceItem"
+      :index="viewModalKey"
+    />
 
     <FormSwitch
-      label="Display experience?"
+      v-model="enabled"
+      label="Display Experience?"
       class="mb-3"
-      :value="enabled"
-      @input="updateEnabled"
+      @input="handle"
     />
 
     <div
       v-if="enabled"
-      class="mb-3"
+      class="row"
     >
-      <!-- Experience items list -->
-      <h4 class="mb-3">
-        Current Experience Items
-      </h4>
-
-      <b-row v-if="list.length > 0">
-        <b-col
-          v-for="(item, index) in list"
-          :key="index"
-          md="3"
-          sm="4"
-          class="mb-3"
-        >
-          <div
-            class="experience-item-list"
-            @click="showModal(index)"
-          >
-            <h5>
-              {{ item.company }}
-              <small class="d-block">{{ item.title }}</small>
-            </h5>
-            <span>{{ item.duration }}</span>
-          </div>
-        </b-col>
-      </b-row>
       <div
-        v-else
-        class="mb-3"
+        v-for="(item, index) in list"
+        :key="index"
+        class="col-md-3 test mb-3"
       >
-        No experience items yet, try adding one..
+        <div
+          class="experience-item"
+          @click="svm(index)"
+        >
+          <h4 class="w-100">
+            {{ item.company }}
+          </h4>
+          <span>{{ item.title }}</span>
+        </div>
       </div>
-
-      <!-- Key is a dodgy way to reset the form -->
-      <FormExperience
-        :key="key"
-        @input="handleUpdate"
-      />
-
-      <b-button
-        class="mb-3"
-        size="lg"
-        variant="outline"
-        @click="addExperienceItem"
-      >
-        Add experience item&nbsp;
-        <fa-icon
-          icon="plus"
-          size="sm"
-        />
-      </b-button>
+      <div class="col-md-3 test mb-3">
+        <div
+          class="add-experience-item"
+          @click="showAddModal = true"
+        >
+          <fa-icon
+            class="d-block"
+            icon="plus"
+            size="2x"
+          />
+        </div>
+      </div>
     </div>
 
     <!-- Navigation -->
-    <b-row>
-      <b-col
-        xs="6"
-        class="d-flex flex-row"
+    <div class="row">
+      <div
+        class="col-xs-6 d-flex flex-items-center flex-row"
       >
-        <b-button
-          variant="outline"
-          to="/current-role"
-          size="lg"
-        >
+        <router-link to="/current-role">
           Back
-        </b-button>
-      </b-col>
-      <b-col
-        xs="6"
-        class="d-flex flex-row-reverse"
+        </router-link>
+      </div>
+      <div
+        class="col-xs-6 d-flex flex-items-center flex-row-reverse"
       >
-        <b-button
-          variant="outline"
+        <router-link
           to="/education"
-          size="lg"
+          class="btn btn-outline btn-lg"
         >
           Education&nbsp;
           <fa-icon icon="arrow-right" />
-        </b-button>
-      </b-col>
-    </b-row>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import FormSwitch from '@/components/common/FormSwitch.vue';
-import FormExperience from '@/components/common/FormExperience.vue';
-import { mapState } from 'vuex';
+import AddExperienceModal from '@/components/experience/AddExperienceModal.vue';
+import ViewExperienceModal from '@/components/experience/ViewExperienceModal.vue';
 
 export default {
   components: {
     FormSwitch,
-    FormExperience,
+    AddExperienceModal,
+    ViewExperienceModal,
   },
   data() {
     return {
-      key: 0,
-      modalKey: 0,
-      experience: {},
+      showAddModal: false,
+      showViewModal: false,
+      viewModalKey: 0,
     };
   },
   computed: {
-    ...mapState({
-      enabled: state => state.config.experience.enabled,
-      list: state => state.config.experience.list,
-    }),
-    modalItem() {
-      return this.list[this.modalKey];
+    enabled: {
+      get() {
+        return this.$store.state.config.experience.enabled;
+      },
+      set(value) {
+        this.$store.commit('updateExperience', {
+          prop: 'enabled',
+          value,
+        });
+      },
+    },
+    list: {
+      get() {
+        return this.$store.state.config.experience.list;
+      },
+      // set(value) {
+      //   this.$store.commit('updateExperience', {
+      //     prop: 'enabled',
+      //     value,
+      //   });
+      // },
+    },
+    viewExperienceItem() {
+      return this.list[this.viewModalKey] || {};
     },
   },
   watch: {
@@ -155,41 +130,50 @@ export default {
     this.$emit('input', this.formatted);
   },
   methods: {
-    updateEnabled(value) {
-      this.$store.commit('updateExperienceEnabled', value);
-    },
-    handleUpdate(payload) {
-      this.experience = payload;
-    },
-    showModal(key) {
-      this.modalKey = key;
-      this.$refs['experience-modal'].show();
-    },
-    addExperienceItem() {
-      if (this.experience.company.length > 0 && this.experience.title.length > 0 && this.experience.duration.length > 0) {
-        this.$store.commit('addExperienceItem', this.experience);
-        // Still keeping the dodgy
-        this.key += 1;
-        this.experience = {};
+    handle() {
+      if (this.enabled === false) {
+        this.$router.push('/education');
       }
     },
-    removeExperienceItem(index) {
-      this.$store.commit('removeExperienceItem', index);
+    svm(index) {
+      this.viewModalKey = index;
+      this.showViewModal = true;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.experience-item-list {
-  border: 2px solid #ffffff;
-  border-radius: 7px;
-  padding: 7px;
+@import "@/assets/styles/variables.scss";
+
+
+.experience-item, .add-experience-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 
+  height: 100%;
+  padding: 30px 20px;
+  border: 2px solid $primaryColor;
+
+  cursor: pointer;
+  transition: 400ms linear;
+
   &:hover {
-    cursor: pointer;
-    text-decoration: underline;
+    background: $primaryColor;
+    border-color: 2px solid $primaryColorDarken2;
+    color: $primaryColorWhite;
   }
+
+  h4 {
+    flex-basis: 100%;
+    text-align: center;
+  }
+}
+
+.add-experience-item {
+  border: 2px dashed $primaryColor;
 }
 </style>

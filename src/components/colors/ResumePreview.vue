@@ -314,10 +314,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/variables.scss';
+@import '@/assets/styles/variables.scss';
 
   svg {
     width: 100%;
-    border: 1px solid darken($backgroundColor, 5%);
+    border: 1px solid darken($backgroundColor, 15%);
   }
 </style>
