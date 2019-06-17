@@ -84,8 +84,9 @@ const vrouter = new Router({
   ],
 });
 
-vrouter.beforeEach((to, from) => {
+vrouter.beforeEach((to, from, next) => {
   document.title = to.meta.title || DEFAULT_TITLE;
+  next();
 });
 
 export default vrouter;
