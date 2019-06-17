@@ -12,6 +12,14 @@
   cursor: pointer;
 }
 
+.mobile-scroll-fix {
+  @media screen and (max-width: 600px) {
+    // overflow: hidden;
+    position: fixed;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 @for $i from 0 to 5 {
   .mx-#{$i} {
     margin: 0 ($i * 5px) !important;

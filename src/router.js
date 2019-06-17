@@ -1,6 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Colors from './views/Colors.vue';
+import Applicant from './views/Applicant.vue';
+import CurrentRole from './views/CurrentRole.vue';
+import Experience from './views/Experience.vue';
+import Education from './views/Education.vue';
+import SkillsAndReferences from './views/SkillsAndReferences.vue';
 
 Vue.use(Router);
 
@@ -19,32 +25,32 @@ export default new Router({
     {
       path: '/colors',
       name: 'colors',
-      component: () => import('./views/Colors.vue'),
+      component: Colors,
     },
     {
       path: '/applicant',
       name: 'applicant',
-      component: () => import('./views/Applicant.vue'),
+      component: Applicant,
     },
     {
       path: '/current-role',
       name: 'current-role',
-      component: () => import('./views/CurrentRole.vue'),
+      component: CurrentRole,
     },
     {
       path: '/experience',
       name: 'experience',
-      component: () => import('./views/Experience.vue'),
+      component: Experience,
     },
     {
       path: '/education',
       name: 'education',
-      component: () => import('./views/Education.vue'),
+      component: Education,
     },
     {
       path: '/skills-and-references',
       name: 'skills-and-references',
-      component: () => import('./views/SkillsAndReferences.vue'),
+      component: SkillsAndReferences,
     },
     {
       path: '/submit',

@@ -29,7 +29,7 @@
         >
 
         <div class="form-description small">
-          The company your worked for.
+          The company you worked for.
         </div>
       </div>
       <!-- Title -->

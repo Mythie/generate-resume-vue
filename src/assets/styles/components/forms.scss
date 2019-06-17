@@ -1,5 +1,11 @@
 @import "@/assets/styles/variables.scss";
 
+input, textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 0;
+}
+
 div.form-group {
   margin: 15px 0;
 }

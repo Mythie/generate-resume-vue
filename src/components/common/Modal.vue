@@ -77,6 +77,15 @@ export default {
       },
     },
   },
+  watch: {
+    show() {
+      if (this.show) {
+        document.body.classList.add('ios-scroll-fix');
+      } else {
+        document.body.classList.remove('ios-scroll-fix');
+      }
+    },
+  },
 };
 </script>
 
@@ -84,26 +93,36 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
   z-index: 9997;
-  overflow-y: auto;
 
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
 
   display: flex;
   justify-content: center;
 
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
   @media screen and (min-width: 600px) {
     align-items: center;
   }
+}
 
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+.modal-dialog, .modal {
+    max-height: none;
 }
 
 .modal-dialog {
+  overflow-y: auto;
+  height: 100%;
+
+  position: relative;
   z-index: 9998;
   width: 100%;
   max-width: 800px;
@@ -113,6 +132,7 @@ export default {
     padding: 20px;
     background: $backgroundColor;
     margin: 10px;
+
 
     header {
       padding-bottom: 7px;
