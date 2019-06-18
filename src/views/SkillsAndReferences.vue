@@ -191,6 +191,11 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/variables.scss";
 
+.skills-and-references {
+  @media screen and (min-width: 600px) {
+    align-self: center;
+  }
+}
 
 .reference-item, .add-reference-item {
   display: flex;

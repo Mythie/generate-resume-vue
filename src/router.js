@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import PrivacyPolicy from './views/PrivacyPolicy.vue';
+import TermsOfService from './views/TermsOfService.vue';
 import Colors from './views/Colors.vue';
 import Applicant from './views/Applicant.vue';
 import CurrentRole from './views/CurrentRole.vue';
@@ -24,6 +26,16 @@ const vrouter = new Router({
       path: '/',
       name: 'home',
       component: Home,
+    },
+    {
+      path: '/privacy-policy',
+      name: 'privacy-policy',
+      component: PrivacyPolicy,
+    },
+    {
+      path: '/terms-of-service',
+      name: 'terms-of-service',
+      component: TermsOfService,
     },
     {
       path: '/colors',

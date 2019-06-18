@@ -14,6 +14,7 @@
   flex-direction: column; 
 }
 
+
 .flex-row-reverse {
   flex-direction: row-reverse;
 }
@@ -24,4 +25,8 @@
 
 .flex-justify-between {
   justify-content: space-between
+}
+
+.flex-justify-self-center {
+  justify-self: center;
 }

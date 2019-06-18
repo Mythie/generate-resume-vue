@@ -138,6 +138,11 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/variables.scss";
 
+.education {
+  @media screen and (min-width: 600px) {
+    align-self: center;
+  }
+}
 
 .education-item, .add-education-item {
   display: flex;

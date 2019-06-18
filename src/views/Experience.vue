@@ -146,6 +146,11 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/variables.scss";
 
+.experience {
+  @media screen and (min-width: 600px) {
+    align-self: center;
+  }
+}
 
 .experience-item, .add-experience-item {
   display: flex;

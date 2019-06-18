@@ -223,6 +223,12 @@ export default {
 
 <style lang="scss" scoped>
 
+.current-role {
+  @media screen and (min-width: 600px) {
+    align-self: center;
+  }
+}
+
 .buffer {
   margin-bottom: 10px;
 }

@@ -15,7 +15,7 @@
     display: table;
   }
 
-  @for $i from 1 to 12 {
+  @for $i from 1 to 13 {
     .col-xs-#{$i}, col.xs-#{$i} {
       position: relative;
       width: ($i / 12) * 100%;

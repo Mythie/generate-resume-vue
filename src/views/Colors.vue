@@ -1,5 +1,5 @@
 <template>
-  <div class="color-forms container">
+  <div class="colors container">
     <h2 class="title">
       Select your Colors
     </h2>
@@ -89,8 +89,12 @@
       </div>
     </div>
     <div class="row reverse">
-      <div class="col-md-6" />
-      <div class="col-md-6 d-flex flex-row-reverse">
+      <div class="col-md-6 d-flex flex-row flex-items-center">
+        <router-link to="/">
+          Back
+        </router-link>
+      </div>
+      <div class="col-md-6 d-flex flex-row-reverse flex-items-center">
         <router-link
           to="/applicant"
           class="btn btn-lg btn-outline"
@@ -183,18 +187,25 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/variables.scss';
-  .resume-container {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    .resume-preview {
-      width: 100%;
+.colors {
+  @media screen and (min-width: 600px) {
+    align-self: center;
+  }
+}
 
-      @media screen and (min-width: 1000px) {
-        width: 75%;
-      }
+.resume-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .resume-preview {
+    width: 100%;
+
+    @media screen and (min-width: 1000px) {
+      width: 75%;
     }
   }
+}
 </style>
