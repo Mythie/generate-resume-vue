@@ -103,6 +103,7 @@ export default {
 
 .resume-submit {
   text-align: center;
+  align-self: center;
 }
 
 .spinner {
