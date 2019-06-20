@@ -20,8 +20,6 @@
 </template>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
-
 @import '~normalize.css';
 @import '~animate.css/animate.min.css';
 
